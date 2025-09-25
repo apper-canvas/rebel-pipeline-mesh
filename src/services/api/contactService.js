@@ -131,9 +131,51 @@ class ContactService {
           });
         }
         
-        if (successful.length > 0) {
+if (successful.length > 0) {
+          const createdContact = successful[0].data;
+          
+          // Send email notification via Edge function
+          try {
+            const { ApperClient } = window.ApperSDK;
+            const apperClient = new ApperClient({
+              apperProjectId: import.meta.env.VITE_APPER_PROJECT_ID,
+              apperPublicKey: import.meta.env.VITE_APPER_PUBLIC_KEY
+            });
+
+            // Prepare contact data for email
+            const emailData = {
+              first_name_c: createdContact.first_name_c,
+              last_name_c: createdContact.last_name_c,
+              email_c: createdContact.email_c,
+              phone_c: createdContact.phone_c,
+              title_c: createdContact.title_c,
+              status_c: createdContact.status_c,
+              company_name: createdContact.company_id_c?.Name || 'Unknown Company'
+            };
+
+            // Invoke Edge function for email sending (non-blocking)
+            apperClient.functions.invoke(import.meta.env.VITE_SEND_CONTACT_NOTIFICATION, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(emailData)
+            }).then(emailResult => {
+              if (emailResult.success) {
+                console.log('Email notification sent successfully:', emailResult.data);
+              } else {
+                console.error('Failed to send email notification:', emailResult.message);
+              }
+            }).catch(emailError => {
+              console.error('Email notification error:', emailError.message);
+            });
+
+          } catch (emailError) {
+            console.error('Failed to initialize email notification:', emailError.message);
+          }
+
           toast.success("Contact created successfully");
-          return successful[0].data;
+          return createdContact;
         }
       }
 
