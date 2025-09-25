@@ -1,0 +1,90 @@
+[
+  {
+    "Id": 1,
+    "title": "Website Redesign Project",
+    "value": 25000,
+    "stage": "qualified",
+    "contactId": 1,
+    "companyId": 1,
+    "probability": 50,
+    "closeDate": "2024-03-15T00:00:00Z",
+    "createdAt": "2024-01-20T10:00:00Z"
+  },
+  {
+    "Id": 2,
+    "title": "CRM Implementation",
+    "value": 75000,
+    "stage": "proposal",
+    "contactId": 2,
+    "companyId": 2,
+    "probability": 75,
+    "closeDate": "2024-04-01T00:00:00Z",
+    "createdAt": "2024-01-22T14:30:00Z"
+  },
+  {
+    "Id": 3,
+    "title": "Brand Identity Package",
+    "value": 15000,
+    "stage": "closed",
+    "contactId": 3,
+    "companyId": 3,
+    "probability": 100,
+    "closeDate": "2024-02-28T00:00:00Z",
+    "createdAt": "2024-01-18T09:15:00Z"
+  },
+  {
+    "Id": 4,
+    "title": "Business Strategy Consultation",
+    "value": 12000,
+    "stage": "lead",
+    "contactId": 4,
+    "companyId": 4,
+    "probability": 25,
+    "closeDate": "2024-05-15T00:00:00Z",
+    "createdAt": "2024-01-25T16:20:00Z"
+  },
+  {
+    "Id": 5,
+    "title": "Healthcare App Development",
+    "value": 120000,
+    "stage": "qualified",
+    "contactId": 5,
+    "companyId": 5,
+    "probability": 50,
+    "closeDate": "2024-06-30T00:00:00Z",
+    "createdAt": "2024-01-28T11:45:00Z"
+  },
+  {
+    "Id": 6,
+    "title": "Sales Training Program",
+    "value": 8000,
+    "stage": "proposal",
+    "contactId": 6,
+    "companyId": 1,
+    "probability": 75,
+    "closeDate": "2024-03-30T00:00:00Z",
+    "createdAt": "2024-01-30T13:30:00Z"
+  },
+  {
+    "Id": 7,
+    "title": "Operations Optimization",
+    "value": 45000,
+    "stage": "lead",
+    "contactId": 7,
+    "companyId": 2,
+    "probability": 25,
+    "closeDate": "2024-07-15T00:00:00Z",
+    "createdAt": "2024-02-01T08:20:00Z"
+  },
+  {
+    "Id": 8,
+    "title": "UI/UX Design Services",
+    "value": 18000,
+    "stage": "qualified",
+    "contactId": 8,
+    "companyId": 3,
+    "probability": 50,
+    "closeDate": "2024-04-20T00:00:00Z",
+    "createdAt": "2024-02-03T15:10:00Z"
+  }
+]

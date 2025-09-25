@@ -1,0 +1,74 @@
+[
+  {
+    "Id": 1,
+    "name": "TechCorp Solutions",
+    "industry": "Technology",
+    "size": "201-500 employees",
+    "website": "https://techcorp.com",
+    "address": "123 Tech Street, San Francisco, CA 94105",
+    "createdAt": "2024-01-10T00:00:00Z"
+  },
+  {
+    "Id": 2,
+    "name": "Innovate Co",
+    "industry": "Software Development",
+    "size": "51-200 employees",
+    "website": "https://innovate.co",
+    "address": "456 Innovation Ave, Austin, TX 78701",
+    "createdAt": "2024-01-12T00:00:00Z"
+  },
+  {
+    "Id": 3,
+    "name": "Design Studio Plus",
+    "industry": "Creative Services",
+    "size": "11-50 employees",
+    "website": "https://designstudio.com",
+    "address": "789 Creative Blvd, New York, NY 10001",
+    "createdAt": "2024-01-14T00:00:00Z"
+  },
+  {
+    "Id": 4,
+    "name": "Business Consultants LLC",
+    "industry": "Consulting",
+    "size": "2-10 employees",
+    "website": "https://consultant.biz",
+    "address": "321 Business Park, Chicago, IL 60601",
+    "createdAt": "2024-01-16T00:00:00Z"
+  },
+  {
+    "Id": 5,
+    "name": "HealthTech Innovations",
+    "industry": "Healthcare Technology",
+    "size": "101-200 employees",
+    "website": "https://healthtech.org",
+    "address": "654 Medical Center Dr, Boston, MA 02101",
+    "createdAt": "2024-01-18T00:00:00Z"
+  },
+  {
+    "Id": 6,
+    "name": "Global Manufacturing Inc",
+    "industry": "Manufacturing",
+    "size": "1001+ employees",
+    "website": "https://globalmanufacturing.com",
+    "address": "987 Industrial Way, Detroit, MI 48201",
+    "createdAt": "2024-01-20T00:00:00Z"
+  },
+  {
+    "Id": 7,
+    "name": "Green Energy Solutions",
+    "industry": "Renewable Energy",
+    "size": "501-1000 employees",
+    "website": "https://greenenergy.com",
+    "address": "159 Solar Street, Phoenix, AZ 85001",
+    "createdAt": "2024-01-22T00:00:00Z"
+  },
+  {
+    "Id": 8,
+    "name": "Retail Masters",
+    "industry": "Retail",
+    "size": "201-500 employees",
+    "website": "https://retailmasters.com",
+    "address": "753 Commerce Plaza, Miami, FL 33101",
+    "createdAt": "2024-01-24T00:00:00Z"
+  }
+]
