@@ -31,34 +31,34 @@ const DealCard = ({
     return colors[stage] || "bg-gray-100 border-gray-200";
   };
 
-  return (
+return (
     <Card className={cn(
       "p-4 cursor-pointer transition-all duration-200 hover:shadow-card-hover border-l-4",
-      getStageColor(deal.stage),
+      getStageColor(deal.stage_c),
       isDragging && "deal-card-dragging",
       className
     )} onClick={onClick}>
       <div className="space-y-3">
         <div>
-          <h3 className="font-semibold text-gray-900 text-sm">{deal.title}</h3>
+          <h3 className="font-semibold text-gray-900 text-sm">{deal.title_c}</h3>
           <p className="text-lg font-bold text-accent-500 mt-1">
-            {formatCurrency(deal.value)}
+            {formatCurrency(deal.value_c)}
           </p>
         </div>
         
         <div className="flex items-center space-x-2">
-          {contact && (
+{contact && (
             <>
               <Avatar 
-                name={`${contact.firstName} ${contact.lastName}`}
+                name={`${contact.first_name_c || ''} ${contact.last_name_c || ''}`}
                 size="sm"
               />
               <div className="text-xs">
                 <p className="text-gray-900 font-medium">
-                  {contact.firstName} {contact.lastName}
+                  {contact.first_name_c} {contact.last_name_c}
                 </p>
                 {company && (
-                  <p className="text-gray-500">{company.name}</p>
+                  <p className="text-gray-500">{company.name_c}</p>
                 )}
               </div>
             </>
@@ -66,11 +66,11 @@ const DealCard = ({
         </div>
 
         <div className="flex items-center justify-between">
-          <Badge variant="default" size="sm">
-            {deal.probability}% probability
+<Badge variant="default" size="sm">
+            {deal.probability_c}% probability
           </Badge>
           <span className="text-xs text-gray-500">
-            {new Date(deal.closeDate).toLocaleDateString()}
+            {new Date(deal.close_date_c).toLocaleDateString()}
           </span>
         </div>
       </div>

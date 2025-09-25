@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import MetricCard from "@/components/molecules/MetricCard";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
+import React, { useEffect, useState } from "react";
 import { dealService } from "@/services/api/dealService";
 import { contactService } from "@/services/api/contactService";
 import { activityService } from "@/services/api/activityService";
+import MetricCard from "@/components/molecules/MetricCard";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
 
 const Dashboard = () => {
   const [deals, setDeals] = useState([]);
@@ -47,30 +47,30 @@ const Dashboard = () => {
     }).format(value);
   };
 
-  const calculateMetrics = () => {
+const calculateMetrics = () => {
     const totalDeals = deals.length;
-    const totalPipelineValue = deals.reduce((sum, deal) => sum + (deal.value || 0), 0);
-    const closedDeals = deals.filter(deal => deal.stage === "closed");
+    const totalPipelineValue = deals.reduce((sum, deal) => sum + (deal.value_c || 0), 0);
+    const closedDeals = deals.filter(deal => deal.stage_c === 'closed');
     const conversionRate = totalDeals > 0 ? ((closedDeals.length / totalDeals) * 100).toFixed(1) : 0;
-    const activeContacts = contacts.filter(contact => contact.status === "active").length;
+    const activeContacts = contacts.filter(contact => contact.status_c === "active").length;
     
     return {
       totalDeals,
       totalPipelineValue,
       conversionRate: `${conversionRate}%`,
       activeContacts,
-      closedDealsValue: closedDeals.reduce((sum, deal) => sum + (deal.value || 0), 0)
+      closedDealsValue: closedDeals.reduce((sum, deal) => sum + (deal.value_c || 0), 0)
     };
   };
 
   const getRecentActivities = () => {
     return activities
-      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+.sort((a, b) => new Date(b.created_at_c) - new Date(a.created_at_c))
       .slice(0, 5);
   };
 
   const getContactById = (contactId) => {
-    return contacts.find(contact => contact.Id === contactId);
+return contacts.find(contact => contact.Id === contactId);
   };
 
   if (loading) return <Loading />;
@@ -126,8 +126,8 @@ const Dashboard = () => {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Pipeline by Stage</h2>
           <div className="space-y-4">
             {["lead", "qualified", "proposal", "closed"].map(stage => {
-              const stageDeals = deals.filter(deal => deal.stage === stage);
-              const stageValue = stageDeals.reduce((sum, deal) => sum + (deal.value || 0), 0);
+const stageDeals = deals.filter(deal => deal.stage_c === stage);
+const stageValue = stageDeals.reduce((sum, deal) => sum + (deal.value_c || 0), 0);
               const percentage = metrics.totalPipelineValue > 0 ? 
                 ((stageValue / metrics.totalPipelineValue) * 100).toFixed(1) : 0;
               
@@ -160,25 +160,25 @@ const Dashboard = () => {
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Activities</h2>
           <div className="space-y-4">
             {recentActivities.map(activity => {
-              const contact = getContactById(activity.contactId);
+const contact = getContactById(activity.contact_id_c);
               return (
                 <div key={activity.Id} className="flex items-start space-x-3">
                   <div className={`w-2 h-2 rounded-full mt-2 ${
-                    activity.type === "call" ? "bg-blue-400" :
-                    activity.type === "email" ? "bg-green-400" :
-                    activity.type === "meeting" ? "bg-purple-400" : "bg-gray-400"
+activity.type_c === "call" ? "bg-blue-400" :
+                    activity.type_c === "email" ? "bg-green-400" :
+                    activity.type_c === "meeting" ? "bg-purple-400" : "bg-gray-400"
                   }`} />
                   <div className="flex-1 min-w-0">
                     <p className="text-sm text-gray-900">
-                      {activity.description}
+{activity.description_c}
                     </p>
                     {contact && (
-                      <p className="text-xs text-gray-500">
-                        {contact.firstName} {contact.lastName}
+<p className="text-xs text-gray-500">
+                        {contact?.first_name_c} {contact?.last_name_c}
                       </p>
                     )}
                     <p className="text-xs text-gray-400 mt-1">
-                      {new Date(activity.createdAt).toLocaleDateString()}
+{new Date(activity.created_at_c).toLocaleDateString()}
                     </p>
                   </div>
                 </div>

@@ -1,14 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
-import Avatar from "@/components/atoms/Avatar";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import ApperIcon from "@/components/ApperIcon";
 import { companyService } from "@/services/api/companyService";
 import { contactService } from "@/services/api/contactService";
 import { dealService } from "@/services/api/dealService";
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
+import Avatar from "@/components/atoms/Avatar";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
+import Contacts from "@/components/pages/Contacts";
+import Deals from "@/components/pages/Deals";
 
 const CompanyDetail = () => {
   const { id } = useParams();
@@ -37,11 +39,11 @@ const CompanyDetail = () => {
         dealService.getAll()
       ]);
 
-      const companyContacts = contactsData.filter(contact => contact.companyId === companyData.Id);
+const companyContacts = contactsData.filter(contact => contact.company_id_c === companyData.Id);
       setContacts(companyContacts);
 
-      const companyDeals = dealsData.filter(deal => 
-        companyContacts.some(contact => contact.Id === deal.contactId)
+const companyDeals = dealsData.filter(deal => 
+        companyContacts.some(contact => contact.Id === deal.contact_id_c)
       );
       setDeals(companyDeals);
     } catch (err) {
@@ -96,41 +98,44 @@ const CompanyDetail = () => {
                 <ApperIcon name="Building2" className="text-primary-600" size={32} />
               </div>
               <div className="flex-1">
-                <h2 className="text-xl font-bold text-gray-900">{company.name}</h2>
-                <p className="text-gray-600 mt-1">{company.industry}</p>
+<h2 className="text-xl font-bold text-gray-900">{company.name_c}</h2>
+<p className="text-gray-600 mt-1">{company.industry_c}</p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
                   <div className="space-y-4">
                     <div>
-                      <p className="text-sm text-gray-500">Company Size</p>
-                      <p className="text-gray-900">{company.size}</p>
+<p className="text-sm text-gray-500">Company Size</p>
+                      <p className="text-gray-900">{company.size_c || 'Not specified'}</p>
                     </div>
-                    {company.website && (
+{company.website_c && (
                       <div>
                         <p className="text-sm text-gray-500">Website</p>
                         <a 
-                          href={company.website} 
+                          href={company.website_c} 
                           target="_blank" 
                           rel="noopener noreferrer"
                           className="text-primary-600 hover:text-primary-700 flex items-center space-x-1"
                         >
-                          <span>{company.website}</span>
+                          <span>{company.website_c}</span>
                           <ApperIcon name="ExternalLink" size={14} />
                         </a>
                       </div>
                     )}
                   </div>
                   <div className="space-y-4">
-                    {company.address && (
+{company.address_c && (
                       <div>
                         <p className="text-sm text-gray-500">Address</p>
-                        <p className="text-gray-900">{company.address}</p>
+                        <p className="text-gray-900">{company.address_c}</p>
                       </div>
                     )}
                     <div>
                       <p className="text-sm text-gray-500">Added</p>
-                      <p className="text-gray-900">
-                        {new Date(company.createdAt).toLocaleDateString()}
+<p className="text-gray-900">
+                        {company.created_at_c ? 
+                          `Added ${new Date(company.created_at_c).toLocaleDateString()}` :
+                          'Date not available'
+                        }
                       </p>
                     </div>
                   </div>
@@ -177,14 +182,15 @@ const CompanyDetail = () => {
               >
                 <div className="flex items-center space-x-3">
                   <Avatar 
-                    name={`${contact.firstName} ${contact.lastName}`}
+name={`${contact.first_name_c || ''} ${contact.last_name_c || ''}`}
                     size="sm"
                   />
                   <div className="flex-1">
-                    <h4 className="font-medium text-gray-900">
-                      {contact.firstName} {contact.lastName}
-                    </h4>
-                    <p className="text-sm text-gray-600">{contact.title}</p>
+<h4 className="font-medium text-gray-900">
+                      {contact.first_name_c} {contact.last_name_c}
+</h4>
+<p className="text-sm text-gray-600">{contact.title_c || 'No title'}</p>
+                    <p className="text-sm text-gray-500">{contact.email_c || 'No email'}</p>
                   </div>
                   <ApperIcon name="ChevronRight" className="text-gray-400" size={16} />
                 </div>
@@ -204,15 +210,15 @@ const CompanyDetail = () => {
               <div key={deal.Id} className="border border-gray-200 rounded-lg p-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-gray-900">{deal.title}</h4>
-                    <p className="text-sm text-gray-600 capitalize">{deal.stage}</p>
+<h4 className="font-medium text-gray-900">{deal.title_c}</h4>
+<p className="text-sm text-gray-600 capitalize">{deal.stage_c}</p>
                   </div>
                   <div className="text-right">
                     <p className="font-semibold text-accent-500">
-                      {formatCurrency(deal.value)}
+{formatCurrency(deal.value_c)}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {deal.probability}% probability
+{deal.probability_c}% probability
                     </p>
                   </div>
                 </div>

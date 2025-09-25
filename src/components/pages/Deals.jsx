@@ -90,7 +90,7 @@ const Deals = () => {
   };
 
   const getTotalPipelineValue = () => {
-    return deals.reduce((total, deal) => total + (deal.value || 0), 0);
+return deals.reduce((total, deal) => total + (deal.value_c || 0), 0);
   };
 
   if (loading) return <Loading />;
@@ -144,7 +144,7 @@ const Deals = () => {
       <DealModal
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        deal={selectedDeal ? { ...selectedDeal, stage: selectedDeal.stage || defaultStage } : { stage: defaultStage }}
+deal={selectedDeal ? { ...selectedDeal, stage_c: selectedDeal.stage_c || defaultStage } : { stage_c: defaultStage }}
         onSave={handleDealSave}
       />
     </div>

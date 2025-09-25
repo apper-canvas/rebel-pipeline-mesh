@@ -28,27 +28,27 @@ const ContactListItem = ({
     )}>
       <div className="flex items-center justify-between">
         <div className="flex items-center space-x-3">
-          <Avatar 
-            name={`${contact.firstName} ${contact.lastName}`}
+<Avatar 
+            name={`${contact.first_name_c || ''} ${contact.last_name_c || ''}`}
             size="default"
           />
           <div>
             <h3 className="font-semibold text-gray-900">
-              {contact.firstName} {contact.lastName}
+              {contact.first_name_c} {contact.last_name_c}
             </h3>
             <p className="text-sm text-gray-600">{contact.title}</p>
-            {company && (
-              <p className="text-sm text-gray-500">{company.name}</p>
+{company && (
+              <p className="text-sm text-gray-500">{company.name_c}</p>
             )}
           </div>
         </div>
         <div className="flex items-center space-x-3">
           <div className="text-right">
-            <p className="text-sm text-gray-600">{contact.email}</p>
-            <p className="text-sm text-gray-500">{contact.phone}</p>
+<p className="text-sm text-gray-600">{contact.email_c}</p>
+            <p className="text-sm text-gray-500">{contact.phone_c}</p>
           </div>
-          <Badge variant={getStatusVariant(contact.status)}>
-            {contact.status}
+<Badge variant={getStatusVariant(contact.status_c)}>
+            {contact.status_c}
           </Badge>
           <div className="flex space-x-2">
             <Button

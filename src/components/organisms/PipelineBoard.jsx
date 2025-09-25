@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
+import { dealService } from "@/services/api/dealService";
+import ApperIcon from "@/components/ApperIcon";
 import DealCard from "@/components/molecules/DealCard";
 import Button from "@/components/atoms/Button";
-import ApperIcon from "@/components/ApperIcon";
-import { dealService } from "@/services/api/dealService";
 
 const PipelineBoard = ({ 
   deals, 
@@ -23,21 +23,21 @@ const PipelineBoard = ({
     { id: "closed", name: "Closed", color: "bg-green-100 border-green-200" }
   ];
 
-  const getDealsByStage = (stage) => {
-    return deals.filter(deal => deal.stage === stage);
+const getDealsByStage = (stage) => {
+    return deals.filter(deal => deal.stage_c === stage);
   };
-
+  
   const getContactById = (contactId) => {
     return contacts.find(contact => contact.Id === contactId);
   };
-
+  
   const getCompanyById = (companyId) => {
     return companies.find(company => company.Id === companyId);
   };
 
   const getStageValue = (stage) => {
     const stageDeals = getDealsByStage(stage);
-    return stageDeals.reduce((total, deal) => total + (deal.value || 0), 0);
+    return stageDeals.reduce((total, deal) => total + (deal.value_c || 0), 0);
   };
 
   const formatCurrency = (value) => {
@@ -69,9 +69,9 @@ const PipelineBoard = ({
 
     if (draggedDeal && draggedDeal.stage !== targetStage) {
       try {
-        const updatedDeal = await dealService.update(draggedDeal.Id, {
+const updatedDeal = await dealService.update(draggedDeal.Id, {
           ...draggedDeal,
-          stage: targetStage
+          stage_c: targetStage
         });
         onDealUpdate(updatedDeal);
         toast.success("Deal moved successfully");
@@ -116,8 +116,8 @@ const PipelineBoard = ({
 
               <div className="space-y-3 max-h-[70vh] overflow-y-auto">
                 {stageDeals.map((deal) => {
-                  const contact = getContactById(deal.contactId);
-                  const company = contact ? getCompanyById(contact.companyId) : null;
+const contact = getContactById(deal.contact_id_c);
+const company = contact ? getCompanyById(contact.company_id_c) : null;
                   
                   return (
                     <div

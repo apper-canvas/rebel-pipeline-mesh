@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
-import SearchBar from "@/components/molecules/SearchBar";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
-import ApperIcon from "@/components/ApperIcon";
 import { companyService } from "@/services/api/companyService";
 import { contactService } from "@/services/api/contactService";
+import ApperIcon from "@/components/ApperIcon";
+import SearchBar from "@/components/molecules/SearchBar";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import Button from "@/components/atoms/Button";
+import Card from "@/components/atoms/Card";
 
 const Companies = () => {
   const [companies, setCompanies] = useState([]);
@@ -54,16 +54,15 @@ const Companies = () => {
 
     if (searchTerm) {
       filtered = filtered.filter(company => 
-        company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        company.industry.toLowerCase().includes(searchTerm.toLowerCase())
+company.name_c.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        company.industry_c.toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     setFilteredCompanies(filtered);
   };
-
-  const getCompanyContacts = (companyId) => {
-    return contacts.filter(contact => contact.companyId === companyId);
+const getCompanyContacts = (companyId) => {
+    return contacts.filter(contact => contact.company_id_c === companyId);
   };
 
   const handleViewCompany = (company) => {
@@ -128,8 +127,8 @@ const Companies = () => {
                         <ApperIcon name="Building2" className="text-primary-600" size={24} />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">{company.name}</h3>
-                        <p className="text-sm text-gray-600">{company.industry}</p>
+<h3 className="font-semibold text-gray-900">{company.name_c}</h3>
+                        <p className="text-sm text-gray-600">{company.industry_c}</p>
                       </div>
                     </div>
                     <Button variant="ghost" size="sm" icon="ExternalLink" />
@@ -138,7 +137,7 @@ const Companies = () => {
                   <div className="grid grid-cols-2 gap-4 text-sm">
                     <div>
                       <p className="text-gray-500">Size</p>
-                      <p className="text-gray-900 font-medium">{company.size}</p>
+<p className="text-gray-900 font-medium">{company.size_c}</p>
                     </div>
                     <div>
                       <p className="text-gray-500">Contacts</p>
@@ -146,31 +145,31 @@ const Companies = () => {
                     </div>
                   </div>
 
-                  {company.website && (
+{company.website_c && (
                     <div className="text-sm">
                       <p className="text-gray-500">Website</p>
                       <a 
-                        href={company.website} 
+                        href={company.website_c} 
                         target="_blank" 
                         rel="noopener noreferrer"
                         className="text-primary-600 hover:text-primary-700"
                         onClick={(e) => e.stopPropagation()}
                       >
-                        {company.website}
+                        {company.website_c}
                       </a>
                     </div>
                   )}
 
-                  {company.address && (
+{company.address_c && (
                     <div className="text-sm">
                       <p className="text-gray-500">Address</p>
-                      <p className="text-gray-900">{company.address}</p>
+                      <p className="text-gray-900">{company.address_c}</p>
                     </div>
                   )}
 
                   <div className="pt-2 border-t border-gray-100">
                     <div className="flex items-center justify-between text-xs text-gray-500">
-                      <span>Added {new Date(company.createdAt).toLocaleDateString()}</span>
+<span>Added {new Date(company.created_at_c).toLocaleDateString()}</span>
                       <div className="flex items-center space-x-2">
                         <ApperIcon name="Users" size={14} />
                         <span>{companyContacts.length} contacts</span>

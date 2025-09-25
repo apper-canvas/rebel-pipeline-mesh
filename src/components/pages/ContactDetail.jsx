@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import Button from "@/components/atoms/Button";
-import Card from "@/components/atoms/Card";
-import Avatar from "@/components/atoms/Avatar";
-import Badge from "@/components/atoms/Badge";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import ApperIcon from "@/components/ApperIcon";
 import { contactService } from "@/services/api/contactService";
 import { companyService } from "@/services/api/companyService";
 import { dealService } from "@/services/api/dealService";
 import { activityService } from "@/services/api/activityService";
-
+import ApperIcon from "@/components/ApperIcon";
+import Loading from "@/components/ui/Loading";
+import Error from "@/components/ui/Error";
+import Avatar from "@/components/atoms/Avatar";
+import Button from "@/components/atoms/Button";
+import Badge from "@/components/atoms/Badge";
+import Card from "@/components/atoms/Card";
 const ContactDetail = () => {
   const { id } = useParams();
   const [contact, setContact] = useState(null);
@@ -36,8 +35,8 @@ const ContactDetail = () => {
       const contactData = await contactService.getById(parseInt(id));
       setContact(contactData);
 
-      if (contactData.companyId) {
-        const companyData = await companyService.getById(contactData.companyId);
+if (contactData.company_id_c) {
+        const companyData = await companyService.getById(contactData.company_id_c);
         setCompany(companyData);
       }
 
@@ -46,8 +45,8 @@ const ContactDetail = () => {
         activityService.getAll()
       ]);
 
-      setDeals(dealsData.filter(deal => deal.contactId === contactData.Id));
-      setActivities(activitiesData.filter(activity => activity.contactId === contactData.Id));
+setDeals(dealsData.filter(deal => deal.contact_id_c === contactData.Id));
+setActivities(activitiesData.filter(activity => activity.contact_id_c === contactData.Id));
     } catch (err) {
       setError("Failed to load contact details");
     } finally {
@@ -103,22 +102,22 @@ const ContactDetail = () => {
           <Card className="p-6">
             <div className="flex items-start space-x-6">
               <Avatar 
-                name={`${contact.firstName} ${contact.lastName}`}
+name={`${contact.first_name_c || ''} ${contact.last_name_c || ''}`}
                 size="xl"
               />
               <div className="flex-1">
                 <div className="flex items-start justify-between">
                   <div>
                     <h2 className="text-xl font-bold text-gray-900">
-                      {contact.firstName} {contact.lastName}
+{contact.first_name_c} {contact.last_name_c}
                     </h2>
-                    <p className="text-gray-600 mt-1">{contact.title}</p>
+<p className="text-gray-600 mt-1">{contact.title_c}</p>
                     {company && (
                       <p className="text-gray-500 mt-1">{company.name}</p>
                     )}
                   </div>
-                  <Badge variant={getStatusVariant(contact.status)}>
-                    {contact.status}
+<Badge variant={getStatusVariant(contact.status_c)}>
+                    {contact.status_c}
                   </Badge>
                 </div>
 
@@ -127,25 +126,24 @@ const ContactDetail = () => {
                     <div className="flex items-center space-x-3">
                       <ApperIcon name="Mail" className="text-gray-400" size={18} />
                       <div>
-                        <p className="text-sm text-gray-500">Email</p>
+<p className="text-sm text-gray-500">Email</p>
                         <a 
-                          href={`mailto:${contact.email}`}
+                          href={`mailto:${contact.email_c}`}
                           className="text-primary-600 hover:text-primary-700"
                         >
-                          {contact.email}
+                          {contact.email_c}
                         </a>
-                      </div>
                     </div>
-                    {contact.phone && (
+{contact.phone_c && (
                       <div className="flex items-center space-x-3">
                         <ApperIcon name="Phone" className="text-gray-400" size={18} />
                         <div>
                           <p className="text-sm text-gray-500">Phone</p>
                           <a 
-                            href={`tel:${contact.phone}`}
+                            href={`tel:${contact.phone_c}`}
                             className="text-primary-600 hover:text-primary-700"
                           >
-                            {contact.phone}
+                            {contact.phone_c}
                           </a>
                         </div>
                       </div>
@@ -155,13 +153,13 @@ const ContactDetail = () => {
                     <div>
                       <p className="text-sm text-gray-500">Added</p>
                       <p className="text-gray-900">
-                        {new Date(contact.createdAt).toLocaleDateString()}
+{new Date(contact.created_at_c).toLocaleDateString()}
                       </p>
                     </div>
-                    <div>
+<div>
                       <p className="text-sm text-gray-500">Last Updated</p>
                       <p className="text-gray-900">
-                        {new Date(contact.updatedAt).toLocaleDateString()}
+                        {new Date(contact.updated_at_c).toLocaleDateString()}
                       </p>
                     </div>
                   </div>
@@ -169,6 +167,7 @@ const ContactDetail = () => {
               </div>
             </div>
           </Card>
+        </div>
         </div>
 
         <div>
@@ -211,15 +210,15 @@ const ContactDetail = () => {
               <div key={deal.Id} className="border border-gray-200 rounded-lg p-3">
                 <div className="flex items-center justify-between">
                   <div>
-                    <h4 className="font-medium text-gray-900">{deal.title}</h4>
-                    <p className="text-sm text-gray-600 capitalize">{deal.stage}</p>
+<h4 className="font-medium text-gray-900">{deal.title_c}</h4>
+<p className="text-sm text-gray-600 capitalize">{deal.stage_c}</p>
                   </div>
                   <div className="text-right">
                     <p className="font-semibold text-accent-500">
-                      {formatCurrency(deal.value)}
+{formatCurrency(deal.value_c)}
                     </p>
                     <p className="text-xs text-gray-500">
-                      {deal.probability}% probability
+{deal.probability_c}% probability
                     </p>
                   </div>
                 </div>
@@ -238,14 +237,14 @@ const ContactDetail = () => {
             {activities.slice(0, 5).map(activity => (
               <div key={activity.Id} className="flex items-start space-x-3">
                 <div className={`w-2 h-2 rounded-full mt-2 ${
-                  activity.type === "call" ? "bg-blue-400" :
-                  activity.type === "email" ? "bg-green-400" :
-                  activity.type === "meeting" ? "bg-purple-400" : "bg-gray-400"
+activity.type_c === "call" ? "bg-blue-400" :
+                  activity.type_c === "email" ? "bg-green-400" :
+                  activity.type_c === "meeting" ? "bg-purple-400" : "bg-gray-400"
                 }`} />
                 <div className="flex-1">
-                  <p className="text-sm text-gray-900">{activity.description}</p>
+<p className="text-sm text-gray-900">{activity.description_c}</p>
                   <p className="text-xs text-gray-500 mt-1">
-                    {new Date(activity.createdAt).toLocaleDateString()}
+{new Date(activity.created_at_c).toLocaleDateString()}
                   </p>
                 </div>
               </div>

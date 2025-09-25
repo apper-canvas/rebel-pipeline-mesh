@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Button from "@/components/atoms/Button";
-import SearchBar from "@/components/molecules/SearchBar";
-import ContactListItem from "@/components/molecules/ContactListItem";
-import ContactModal from "@/components/organisms/ContactModal";
-import Loading from "@/components/ui/Loading";
-import Error from "@/components/ui/Error";
-import Empty from "@/components/ui/Empty";
 import { contactService } from "@/services/api/contactService";
 import { companyService } from "@/services/api/companyService";
+import SearchBar from "@/components/molecules/SearchBar";
+import ContactListItem from "@/components/molecules/ContactListItem";
+import Loading from "@/components/ui/Loading";
+import Empty from "@/components/ui/Empty";
+import Error from "@/components/ui/Error";
+import ContactModal from "@/components/organisms/ContactModal";
+import Button from "@/components/atoms/Button";
 
 const Contacts = () => {
   const [contacts, setContacts] = useState([]);
@@ -52,34 +52,34 @@ const Contacts = () => {
     }
   };
 
-  const filterContacts = () => {
+const filterContacts = () => {
     let filtered = contacts;
 
     if (searchTerm) {
       filtered = filtered.filter(contact => 
-        `${contact.firstName} ${contact.lastName}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        contact.title.toLowerCase().includes(searchTerm.toLowerCase())
+        `${contact.first_name_c || ''} ${contact.last_name_c || ''}`.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (contact.email_c || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (contact.title_c || '').toLowerCase().includes(searchTerm.toLowerCase())
       );
     }
 
     if (statusFilter !== "all") {
-      filtered = filtered.filter(contact => contact.status === statusFilter);
+      filtered = filtered.filter(contact => contact.status_c === statusFilter);
     }
-
+    
     setFilteredContacts(filtered);
   };
-
+  
   const handleCreateContact = () => {
     setSelectedContact(null);
     setModalOpen(true);
   };
-
+  
   const handleEditContact = (contact) => {
     setSelectedContact(contact);
     setModalOpen(true);
   };
-
+  
   const handleViewContact = (contact) => {
     window.location.href = `/contacts/${contact.Id}`;
   };
@@ -173,7 +173,7 @@ const Contacts = () => {
             <ContactListItem
               key={contact.Id}
               contact={contact}
-              company={getCompanyById(contact.companyId)}
+company={getCompanyById(contact.company_id_c)}
               onEdit={handleEditContact}
               onView={handleViewContact}
               onDelete={handleDeleteContact}

@@ -14,12 +14,12 @@ const DealModal = ({
   onSave 
 }) => {
   const [formData, setFormData] = useState({
-    title: "",
-    value: "",
-    stage: "lead",
-    contactId: "",
-    probability: 25,
-    closeDate: ""
+title_c: "",
+    value_c: "",
+    stage_c: "lead",
+    contact_id_c: "",
+    probability_c: 25,
+    close_date_c: ""
   });
   const [contacts, setContacts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,12 +30,12 @@ const DealModal = ({
       loadContacts();
       if (deal) {
         setFormData({
-          title: deal.title || "",
-          value: deal.value || "",
-          stage: deal.stage || "lead",
-          contactId: deal.contactId || "",
-          probability: deal.probability || 25,
-          closeDate: deal.closeDate ? deal.closeDate.split("T")[0] : ""
+title_c: deal.title_c || "",
+          value_c: deal.value_c || "",
+          stage_c: deal.stage_c || "lead",
+          contact_id_c: deal.contact_id_c || "",
+          probability_c: deal.probability_c || 25,
+          close_date_c: deal.close_date_c ? deal.close_date_c.split("T")[0] : ""
         });
       } else {
         // Set default close date to 30 days from now
@@ -80,10 +80,10 @@ const DealModal = ({
 
     try {
       const dealData = {
-        ...formData,
-        value: parseFloat(formData.value),
-        probability: parseInt(formData.probability),
-        closeDate: new Date(formData.closeDate).toISOString()
+...formData,
+        value_c: parseFloat(formData.value_c),
+        probability_c: parseInt(formData.probability_c),
+        close_date_c: new Date(formData.close_date_c).toISOString()
       };
 
       let savedDeal;
@@ -108,7 +108,7 @@ const DealModal = ({
     setFormData(prev => ({ ...prev, [field]: value }));
     
     // Update probability based on stage
-    if (field === "stage") {
+if (field === "stage_c") {
       const probabilities = {
         lead: 25,
         qualified: 50,
@@ -118,7 +118,7 @@ const DealModal = ({
       setFormData(prev => ({ 
         ...prev, 
         [field]: value, 
-        probability: probabilities[value] || 25 
+        probability_c: probabilities[value] || 25 
       }));
     }
 
@@ -152,48 +152,48 @@ const DealModal = ({
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <FormField
+<FormField
             label="Deal Title"
             required
-            value={formData.title}
-            onChange={(e) => handleChange("title", e.target.value)}
-            error={errors.title}
+            value={formData.title_c}
+            onChange={(e) => handleChange("title_c", e.target.value)}
+            error={errors.title_c}
             placeholder="e.g., Website Redesign Project"
           />
 
           <FormField
-            label="Deal Value"
+label="Deal Value"
             type="number"
             required
-            value={formData.value}
-            onChange={(e) => handleChange("value", e.target.value)}
-            error={errors.value}
+            value={formData.value_c}
+            onChange={(e) => handleChange("value_c", e.target.value)}
+            error={errors.value_c}
             placeholder="0.00"
             min="0"
             step="0.01"
           />
 
           <FormField
-            label="Contact"
+label="Contact"
             type="select"
             required
-            value={formData.contactId}
-            onChange={(e) => handleChange("contactId", e.target.value)}
-            error={errors.contactId}
+            value={formData.contact_id_c}
+            onChange={(e) => handleChange("contact_id_c", e.target.value)}
+            error={errors.contact_id_c}
           >
             <option value="">Select a contact</option>
             {contacts.map(contact => (
               <option key={contact.Id} value={contact.Id}>
-                {contact.firstName} {contact.lastName}
+                {contact.first_name_c} {contact.last_name_c}
               </option>
             ))}
           </FormField>
 
-          <FormField
+<FormField
             label="Stage"
             type="select"
-            value={formData.stage}
-            onChange={(e) => handleChange("stage", e.target.value)}
+            value={formData.stage_c}
+            onChange={(e) => handleChange("stage_c", e.target.value)}
           >
             <option value="lead">Lead</option>
             <option value="qualified">Qualified</option>
@@ -201,23 +201,23 @@ const DealModal = ({
             <option value="closed">Closed</option>
           </FormField>
 
-          <FormField
+<FormField
             label="Probability (%)"
             type="number"
-            value={formData.probability}
-            onChange={(e) => handleChange("probability", e.target.value)}
+            value={formData.probability_c}
+            onChange={(e) => handleChange("probability_c", e.target.value)}
             min="0"
             max="100"
             step="5"
           />
 
           <FormField
-            label="Expected Close Date"
+label="Expected Close Date"
             type="date"
             required
-            value={formData.closeDate}
-            onChange={(e) => handleChange("closeDate", e.target.value)}
-            error={errors.closeDate}
+            value={formData.close_date_c}
+            onChange={(e) => handleChange("close_date_c", e.target.value)}
+            error={errors.close_date_c}
           />
 
           <div className="flex justify-end space-x-3 pt-4">

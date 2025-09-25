@@ -13,14 +13,14 @@ const ContactModal = ({
   contact = null, 
   onSave 
 }) => {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    companyId: "",
-    title: "",
-    status: "prospect"
+const [formData, setFormData] = useState({
+    first_name_c: "",
+    last_name_c: "",
+    email_c: "",
+    phone_c: "",
+    company_id_c: "",
+    title_c: "",
+    status_c: "prospect"
   });
   const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -30,14 +30,14 @@ const ContactModal = ({
     if (isOpen) {
       loadCompanies();
       if (contact) {
-        setFormData({
-          firstName: contact.firstName || "",
-          lastName: contact.lastName || "",
-          email: contact.email || "",
-          phone: contact.phone || "",
-          companyId: contact.companyId || "",
-          title: contact.title || "",
-          status: contact.status || "prospect"
+setFormData({
+          first_name_c: contact.first_name_c || "",
+          last_name_c: contact.last_name_c || "",
+          email_c: contact.email_c || "",
+          phone_c: contact.phone_c || "",
+          company_id_c: contact.company_id_c || "",
+          title_c: contact.title_c || "",
+          status_c: contact.status_c || "prospect"
         });
       }
     }
@@ -124,64 +124,64 @@ const ContactModal = ({
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
           <div className="grid grid-cols-2 gap-4">
-            <FormField
+<FormField
               label="First Name"
               required
-              value={formData.firstName}
-              onChange={(e) => handleChange("firstName", e.target.value)}
-              error={errors.firstName}
+              value={formData.first_name_c}
+              onChange={(e) => handleChange("first_name_c", e.target.value)}
+              error={errors.first_name_c}
             />
-            <FormField
+<FormField
               label="Last Name"
               required
-              value={formData.lastName}
-              onChange={(e) => handleChange("lastName", e.target.value)}
-              error={errors.lastName}
+              value={formData.last_name_c}
+              onChange={(e) => handleChange("last_name_c", e.target.value)}
+              error={errors.last_name_c}
             />
           </div>
 
-          <FormField
+<FormField
             label="Email"
             type="email"
             required
-            value={formData.email}
-            onChange={(e) => handleChange("email", e.target.value)}
-            error={errors.email}
+            value={formData.email_c}
+            onChange={(e) => handleChange("email_c", e.target.value)}
+            error={errors.email_c}
           />
 
-          <FormField
+<FormField
             label="Phone"
             type="tel"
-            value={formData.phone}
-            onChange={(e) => handleChange("phone", e.target.value)}
-            error={errors.phone}
+            value={formData.phone_c}
+            onChange={(e) => handleChange("phone_c", e.target.value)}
+            error={errors.phone_c}
           />
 
-          <FormField
+<FormField
             label="Job Title"
-            value={formData.title}
-            onChange={(e) => handleChange("title", e.target.value)}
+            value={formData.title_c}
+            onChange={(e) => handleChange("title_c", e.target.value)}
           />
 
           <FormField
-            label="Company"
+label="Company"
             type="select"
-            value={formData.companyId}
-            onChange={(e) => handleChange("companyId", e.target.value)}
+            value={formData.company_id_c}
+            onChange={(e) => handleChange("company_id_c", e.target.value)}
           >
             <option value="">Select a company</option>
             {companies.map(company => (
               <option key={company.Id} value={company.Id}>
-                {company.name}
+                {company.name_c}
               </option>
             ))}
           </FormField>
 
-          <FormField
+<FormField
             label="Status"
             type="select"
-            value={formData.status}
-            onChange={(e) => handleChange("status", e.target.value)}
+            value={formData.status_c}
+            onChange={(e) => handleChange("status_c", e.target.value)}
           >
             <option value="prospect">Prospect</option>
             <option value="active">Active</option>
