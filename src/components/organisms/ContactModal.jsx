@@ -58,10 +58,10 @@ setFormData({
     setErrors({});
 
     // Basic validation
-    const newErrors = {};
-    if (!formData.firstName.trim()) newErrors.firstName = "First name is required";
-    if (!formData.lastName.trim()) newErrors.lastName = "Last name is required";
-    if (!formData.email.trim()) newErrors.email = "Email is required";
+const newErrors = {};
+    if (!(formData.firstName || '').trim()) newErrors.firstName = "First name is required";
+    if (!(formData.lastName || '').trim()) newErrors.lastName = "Last name is required";
+    if (!(formData.email || '').trim()) newErrors.email = "Email is required";
     if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Email is invalid";
     }
