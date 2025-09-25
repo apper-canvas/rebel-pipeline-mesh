@@ -59,11 +59,11 @@ setFormData({
 
     // Basic validation
 const newErrors = {};
-    if (!(formData.firstName || '').trim()) newErrors.firstName = "First name is required";
-    if (!(formData.lastName || '').trim()) newErrors.lastName = "Last name is required";
-    if (!(formData.email || '').trim()) newErrors.email = "Email is required";
-    if (formData.email && !/\S+@\S+\.\S+/.test(formData.email)) {
-      newErrors.email = "Email is invalid";
+if (!(formData.first_name_c || '').trim()) newErrors.first_name_c = "First name is required";
+    if (!(formData.last_name_c || '').trim()) newErrors.last_name_c = "Last name is required";
+    if (!(formData.email_c || '').trim()) newErrors.email_c = "Email is required";
+    if (formData.email_c && !/\S+@\S+\.\S+/.test(formData.email_c)) {
+      newErrors.email_c = "Email is invalid";
     }
 
     if (Object.keys(newErrors).length > 0) {
