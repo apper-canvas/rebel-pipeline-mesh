@@ -110,7 +110,7 @@ class ContactService {
       };
 
       const response = await apperClient.createRecord(this.tableName, params);
-      toast.error(JSON.stringify(response));
+toast.error(response.message || "Failed to create contact");
 
       if (!response.success) {
         console.error(response.message);
@@ -133,8 +133,15 @@ class ContactService {
         }
         
         if (successful.length > 0) {
-          console.log(successful)
-          const createdContact = successful[0].data;
+const createdContact = successful[0].data;
+          
+          // Return full response for display purposes
+          return {
+            contact: createdContact,
+            response: response,
+            successful: successful,
+            failed: failed.length > 0 ? failed : null
+          };
           
           // Send email notification via Edge function
           try {

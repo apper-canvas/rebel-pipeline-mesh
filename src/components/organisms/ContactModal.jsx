@@ -22,9 +22,10 @@ const [formData, setFormData] = useState({
     title_c: "",
     status_c: "prospect"
   });
-  const [companies, setCompanies] = useState([]);
+const [companies, setCompanies] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState({});
+  const [createResponse, setCreateResponse] = useState(null);
 
   useEffect(() => {
     if (isOpen) {
@@ -72,18 +73,22 @@ if (!(formData.first_name_c || '').trim()) newErrors.first_name_c = "First name 
       return;
     }
 
-    try {
+try {
       let savedContact;
       if (contact) {
         savedContact = await contactService.update(contact.Id, formData);
         toast.success("Contact updated successfully");
+        setCreateResponse(null); // Clear response for updates
+        onSave(savedContact);
+        onClose();
       } else {
-        savedContact = await contactService.create(formData);
+        const response = await contactService.create(formData);
+        savedContact = response.contact;
+        setCreateResponse(response); // Store the full response
         toast.success("Contact created successfully");
+        onSave(savedContact);
+        // Don't close modal immediately so user can see response
       }
-      
-      onSave(savedContact);
-      onClose();
     } catch (error) {
       toast.error("Failed to save contact");
     } finally {
@@ -189,7 +194,7 @@ label="Company"
             <option value="inactive">Inactive</option>
           </FormField>
 
-          <div className="flex justify-end space-x-3 pt-4">
+<div className="flex justify-end space-x-3 pt-4">
             <Button
               type="button"
               variant="secondary"
@@ -205,6 +210,31 @@ label="Company"
             </Button>
           </div>
         </form>
+
+        {/* Display Create Response */}
+        {createResponse && (
+          <div className="px-6 pb-6">
+            <div className="mt-4 p-4 bg-gray-50 rounded-lg border">
+              <h3 className="text-sm font-semibold text-gray-700 mb-2">API Response:</h3>
+              <pre className="text-xs text-gray-600 overflow-auto max-h-60 whitespace-pre-wrap">
+                {JSON.stringify(createResponse, null, 2)}
+              </pre>
+              <div className="mt-3 flex justify-end">
+                <Button
+                  type="button"
+                  variant="primary"
+                  size="sm"
+                  onClick={() => {
+                    setCreateResponse(null);
+                    onClose();
+                  }}
+                >
+                  Close
+                </Button>
+              </div>
+            </div>
+          </div>
+        )}
       </motion.div>
     </div>
   );
