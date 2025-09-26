@@ -150,7 +150,7 @@ if (successful.length > 0) {
               phone_c: createdContact.phone_c,
               title_c: createdContact.title_c,
               status_c: createdContact.status_c,
-              company_name: createdContact.company_id_c?.Name || 'Unknown Company'
+company_name: createdContact.company_id_c?.Name || 'Unknown Company'
             };
 
             // Invoke Edge function for email sending (non-blocking)
