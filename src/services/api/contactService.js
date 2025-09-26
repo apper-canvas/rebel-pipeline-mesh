@@ -155,12 +155,12 @@ company_name: createdContact.company_id_c?.Name || 'Unknown Company'
             };
 
             // Invoke Edge function for email sending (non-blocking)
-            apperClient.functions.invoke(import.meta.env.VITE_SEND_CONTACT_NOTIFICATION, {
+apperClient.functions.invoke(import.meta.env.VITE_SEND_CONTACT_NOTIFICATION, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify(btoa(emailData))
+              body: JSON.stringify(emailData)
             }).then(emailResult => {
               if (emailResult.success) {
                 console.log('Email notification sent successfully:', emailResult.data);
