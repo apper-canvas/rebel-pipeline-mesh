@@ -110,6 +110,7 @@ class ContactService {
       };
 
       const response = await apperClient.createRecord(this.tableName, params);
+      console.log(JSON.stringify(response));
 
       if (!response.success) {
         console.error(response.message);
