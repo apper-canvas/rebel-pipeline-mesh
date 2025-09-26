@@ -131,7 +131,8 @@ class ContactService {
           });
         }
         
-if (successful.length > 0) {
+        if (successful.length > 0) {
+          console.log(successful)
           const createdContact = successful[0].data;
           
           // Send email notification via Edge function
@@ -159,7 +160,7 @@ company_name: createdContact.company_id_c?.Name || 'Unknown Company'
               headers: {
                 'Content-Type': 'application/json'
               },
-              body: JSON.stringify(emailData)
+              body: JSON.stringify(btoa(emailData))
             }).then(emailResult => {
               if (emailResult.success) {
                 console.log('Email notification sent successfully:', emailResult.data);
