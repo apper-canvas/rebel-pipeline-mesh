@@ -17,7 +17,7 @@ import ContactDetail from "@/components/pages/ContactDetail";
 import CompanyDetail from "@/components/pages/CompanyDetail";
 import Contacts from "@/components/pages/Contacts";
 import Deals from "@/components/pages/Deals";
-
+import APIResponse from "@/components/pages/APIResponse";
 // Create auth context
 export const AuthContext = createContext(null);
 
@@ -167,9 +167,14 @@ function AppContent() {
             <CompanyDetail />
           </Layout>
         } />
-        <Route path="/deals" element={
+<Route path="/deals" element={
           <Layout>
             <Deals />
+          </Layout>
+        } />
+        <Route path="/api-responses" element={
+          <Layout>
+            <APIResponse />
           </Layout>
         } />
       </Routes>
