@@ -135,15 +135,15 @@ toast.error(response.message || "Failed to create contact");
         if (successful.length > 0) {
 const createdContact = successful[0].data;
           
-          // Return full response for display purposes
-          return {
+          // Log full response for debugging purposes
+          console.log('Contact creation response:', {
             contact: createdContact,
             response: response,
             successful: successful,
             failed: failed.length > 0 ? failed : null
-          };
+          });
           
-          // Send email notification via Edge function
+          // Send email notification via Edge function (non-blocking)
           try {
             const { ApperClient } = window.ApperSDK;
             const apperClient = new ApperClient({
@@ -159,11 +159,11 @@ const createdContact = successful[0].data;
               phone_c: createdContact.phone_c,
               title_c: createdContact.title_c,
               status_c: createdContact.status_c,
-company_name: createdContact.company_id_c?.Name || 'Unknown Company'
+              company_name: createdContact.company_id_c?.Name || 'Unknown Company'
             };
 
             // Invoke Edge function for email sending (non-blocking)
-apperClient.functions.invoke(import.meta.env.VITE_SEND_CONTACT_NOTIFICATION, {
+            apperClient.functions.invoke(import.meta.env.VITE_SEND_CONTACT_NOTIFICATION, {
               method: 'POST',
               headers: {
                 'Content-Type': 'application/json'
